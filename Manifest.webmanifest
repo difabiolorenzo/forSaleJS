@@ -1,0 +1,31 @@
+{
+  "short_name": "ForSale",
+  "name": "ForSale",
+  "theme_color": "#090",
+  "background_color": "#090",
+  "display": "fullscreen",
+  "Scope": "/",
+  "orientation": "portrait",
+  "icons": [
+      {
+          "src": "https://difabiolorenzo.github.io/forSaleJS/src/img/icon_48.jpg",
+          "type": "image/png",
+          "sizes": "48x48"
+      },
+      {
+          "src": "https://difabiolorenzo.github.io/forSaleJS/src/img/icon_96.jpg",
+          "type": "image/png",
+          "sizes": "96x96"
+      },
+      {
+          "src": "https://difabiolorenzo.github.io/forSaleJS/src/img/icon_192.jpg",
+          "type": "image/png",
+          "sizes": "192x192"
+      }
+  ],
+  "start_url": "https://difabiolorenzo.github.io/forSaleJS/index.html",
+  "url": "https://difabiolorenzo.github.io/forSaleJS/",
+  "lang": "",
+  "screenshots": [],
+  "description": "Private Joke"
+}
