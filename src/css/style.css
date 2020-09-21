@@ -54,7 +54,7 @@ a#button:hover {
 @media screen and (orientation:portrait) {
     #content {
         text-align: center;
-        transform: rotate(-90deg) translateX(-133em) translateY(-17em) scale(1);
+        transform: rotate(-90deg) translateX(-100vh) translateY(-33vw) scale(1);
         height: 0vw;
         width: 100vh;
     }
