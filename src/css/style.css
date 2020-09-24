@@ -53,10 +53,7 @@ a#button:hover {
 
 @media screen and (orientation:portrait) {
     #content {
-        text-align: center;
-        transform: rotate(-90deg) translateX(-100vh) translateY(-33vw) scale(1);
-        height: 0vw;
-        width: 100vh;
+        transform: translateY(50vh) scale(0.75);
     }
     a#news, a#news_alter {
         bottom: 8vh;
@@ -66,6 +63,6 @@ a#button:hover {
     }
     a#news, a#news_alter {
         bottom: 15vh;
-        font-size: 5vh;
+        font-size: 4vh;
     }
 }

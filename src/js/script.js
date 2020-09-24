@@ -1,8 +1,13 @@
 function init() {
-    company_A_list = ["Apple", "Amazon", "Microsoft", "Alphabet", "Google", "Facebook", "Twitter", "MySpace", "IBM", "Minecraft", "Mojang", "McAfee", "Sony", "Mozilla", "Alibaba", "LeBonCoin", "Vinted", "Walmart", "Auchan", "Carrefour", "E. Leclerc", "Super U", "McDonalds", "BurgerKing", "Starbucks", "TF1", "FranceTélévision", "France 2", "France 3", "France 4", "France 5", "M6", "Arte", "Canal +", "NRJ12", "Gulli", "BFMTV", "Cherie 25", "Orange", "Numéricable", "Bouygues Télécom", "Nokia", "Samsung", "OnePlus", "Huawei", "MasterCard", "ExxonMobil", "Total", "Numérama", "Didier Raoult Inc.", "Credit Mutuel", "CIC", "Orange Bank", "Banque Postale", "La Poste", "MATMUT", "BNP Paribas", "BRED Banque", "Le Credit Lyonnais", "Manpower", "Domino's Pizza", "Société Générale", "Primark", "Foot Locker", "Yves Rocher", "New Yorker", "H&M", "Plein Ciel", "Zara", "BCHEF", "Decathlon", "Peugeot", "Renault", "Audi", "BMW", "Chevrolet", "Ford", "Fiat", "Hyundai", "Land-Rover", "Mercedes-Benz", "Nissan", "Opel", "Porsche", "Volvo", "Volkswagen", "Citroën", "BBC"]
-    company_B_list = ["La Mie Câline", "LiA", "Espace Coty", "Docks Vauban", "Boulangerie PAUL", "Jules", "Micromania", "BD Lyrium", "Clopinette", "Le H Chicha", "Le Black Café", "L'Eau Tarie", "CaféInk", "McDaids", "O'Brother", "Le Trappist", "La Colombe", "La Bibliothèque Oscar Niemeyer", "Le Vent Couvert", "Les Frites à Victor", "Les Flots Bleus", "Pattaya", "La Petite Rade", "Palais de Topkapi", "Le Bosphore", "Le Roi de la Frite", "Fujiya Sushi", "Soleil d'Asie", "Mondial Pare-Brise", "SteakHouse", "Marmara", "KabyPhone", "1foTeam", "Info-media.biz", "CFC", "Chicken West", "Le Franklin", "TATI", "GIFI", "Port 2000"]
-    companyContractGenerator();
-    // randomContractNumber();
+    additional_text = [
+        [25, ""],
+        [12.5, "puis fait faillite"],
+        [12.5, "puis fait immédiatement faillite"],
+        [25, "qui rachète $a"],
+        [25, "puis change de secteur pour $b"]
+    ]
+    
+    soldCompanyGenerator();
 
     alternate_news = true;
     toggleAlternateNews()
@@ -13,27 +18,53 @@ function redo() {
     init();
 }
 
-function companyContractGenerator() {
+function soldCompanyGenerator() {
     var company_A = company_A_list[Math.floor(Math.random()*company_A_list.length)];
     var company_B = company_B_list[Math.floor(Math.random()*company_B_list.length)];
-    document.getElementById("news").innerHTML = company_A + " rachète " + company_B;
-    document.getElementById("news_alter").innerHTML = company_B + " rachète " + company_A + ".";
+    var extra = pickExtra(company_A, company_B)
+
+    document.getElementById("news").innerHTML = company_A + " rachète " + company_B + extra[0];
+    document.getElementById("news_alter").innerHTML = company_B + " rachète " + company_A + extra[1];
 }
 
-// function randomContractNumber() {
-//     var use_hex = Math.random() >= 0.5;
-//     if (use_hex == true) {
-//         var number = (Math.random()*0xFFFFFFFFF<<0).toString(16);
-//     } else {
-//         var number = ((Math.random()*999999899)+1000);
-//     }
-    
-//     document.getElementById("news_number").innerHTML = "Annonce n° " + number;
-// }
+function pickExtra(company_A, company_B) {
+    var random = Math.round(Math.random() * 100);
+    var random_sector = sector[Math.round(Math.random() * sector.length)]
+    var random_step = 0;
+    var random_next_step = 0;
+    var extra_original = "";
+    var extra = "";
+    var extra_alt = "";
+
+    for (var i = 0;i < additional_text.length; i++) {
+        random_next_step = random_next_step + additional_text[i][0];
+        if ( (random >= random_step && random <= random_next_step) || (random >= random_next_step)) {
+            extra_original = additional_text[i][1];
+        }
+        random_step = random_next_step;
+    }
+    extra = extra_original;
+    extra_alt = extra_original;
+
+    for (var i = 0;i < extra_original.length; i++) {
+        if (extra.charAt(i) == "$" && extra.charAt(i+1) == "a") {
+            extra = replaceAt(extra, i, company_A, 1);
+        }
+        if (extra_alt.charAt(i) == "$" && extra_alt.charAt(i+1) == "a") {
+            extra_alt = replaceAt(extra_alt, i, company_B, 1);
+        }
+        if (extra_alt.charAt(i) == "$" && extra_alt.charAt(i+1) == "b") {
+            extra_alt = replaceAt(extra_alt, i, random_sector, 1);
+        }
+    }
+    return [" " + extra, " " + extra_alt];
+}
+
+function replaceAt(string, index, replace, length) {
+    return string.substring(0, index) + replace + string.substring(index+length + 1);
+}
 
 function toggleAlternateNews()  {
-    // randomContractNumber()
-
     var id = ""
     document.getElementById("news").style = "display:none; height:0; width:0"
     document.getElementById("news_alter").style = "display:none; height:0; width:0"
