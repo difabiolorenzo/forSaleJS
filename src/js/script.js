@@ -3,7 +3,8 @@ function init() {
         [25, ""],
         [12.5, "puis fait faillite"],
         [12.5, "puis fait immédiatement faillite"],
-        [25, "qui rachète $a"],
+        [12.5, "qui rachète $a"],
+        [12.5, "qui rachète $c"],
         [25, "puis change de secteur pour $b"]
     ]
     
@@ -55,6 +56,9 @@ function pickExtra(company_A, company_B) {
         }
         if (extra_alt.charAt(i) == "$" && extra_alt.charAt(i+1) == "b") {
             extra_alt = replaceAt(extra_alt, i, random_sector, 1);
+        }
+        if (extra_alt.charAt(i) == "$" && extra_alt.charAt(i+1) == "c") {
+            extra_alt = replaceAt(extra_alt, i, company_B + " qui rachète à son tour " + company_A, 1);
         }
     }
     return [" " + extra, " " + extra_alt];
